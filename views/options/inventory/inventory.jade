@@ -30,6 +30,14 @@ script(type='text/ng-template', id='partials/options.inventory.inventory.html')
                 .badge.badge-info.stack-count {{points}}
               //-p {{food}}
 
+        li.customize-menu
+          menu.pets-menu(label='Gears ({{gearCount}})')
+            p(ng-show='gearCount < 1') You don't have any gear.
+            div(ng-repeat='(gear,points) in ownedItems(user.items.gears)')
+              button.customize-option(popover='{{Items.gears[gear].notes}}', popover-title='{{Items.gears[gear].text}}', popover-trigger='mouseenter', popover-placement='right', ng-click='chooseGear(gear)', class='Pet_Gear_{{gear}}')
+                .badge.badge-info.stack-count {{points}}
+              p {{gear}}
+
     .span6
       h2 Market
       .row-fluid
@@ -52,6 +60,8 @@ script(type='text/ng-template', id='partials/options.inventory.inventory.html')
                       | Sell {{selectedPotion.name}} for {{selectedPotion.value}} Gold
                     button.btn.btn-primary(ng-show='selectedFood', ng-click='sellInventory()')
                       | Sell {{selectedFood.name}} for {{selectedFood.value}} Gold
+                    button.btn.btn-primary(ng-show='selectedGear', ng-click='sellInventory()')
+                      | Sell {{selectedGear.name}} for {{selectedGear.value}} Gold
 
         menu.inventory-list(type='list')
           li.customize-menu
@@ -81,7 +91,7 @@ script(type='text/ng-template', id='partials/options.inventory.inventory.html')
           li.customize-menu
             menu.pets-menu(label='Gears')
               div(ng-repeat='gear in Items.gears')
-                button.customize-option(popover='{{gear.notes}}', popover-title='{{gear.text}}', popover-trigger='mouseenter', popover-placement='left', ng-click='buy("gear", gear)', class='Pet_Food_{{gear.name}}')
+                button.customize-option(popover='{{gear.notes}}', popover-title='{{gear.text}}', popover-trigger='mouseenter', popover-placement='left', ng-click='buy("gear", gear)', class='Pet_Gear_{{gear.name}}')
                 p
                   |  {{gear.value}}
                   span.Pet_Currency_Gem1x.inline-gems

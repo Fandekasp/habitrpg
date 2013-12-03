@@ -16,6 +16,7 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
     $scope.$watch('user.items.eggs', function(eggs){ $scope.eggCount = countStacks(eggs); }, true);
     $scope.$watch('user.items.hatchingPotions', function(pots){ $scope.potCount = countStacks(pots); }, true);
     $scope.$watch('user.items.food', function(food){ $scope.foodCount = countStacks(food); }, true);
+    $scope.$watch('user.items.gears', function(gears){ $scope.gearCount = countStacks(gears); }, true);
 
     $scope.chooseEgg = function(egg){
       if ($scope.selectedEgg && $scope.selectedEgg.name == egg) {
@@ -78,7 +79,7 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
       } else if ($scope.selectedGear) {
         user.items.gear[$scope.selectedGear.name]--;
         User.setMultiple({
-          'items.gear': user.items.gear,
+          'items.gears': user.items.gear,
           'stats.gp': User.user.stats.gp + $scope.selectedGear.value
         });
         $scope.selectedGear = null;
