@@ -140,6 +140,10 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
         if ($scope.selectedGear.name == 'Saddle') {
           if (!confirm('Saddle ' + pet + '?')) return;
           evolve();
+        // Naming a pet
+        } else if ($scope.selectedGear.name == 'Collar') {
+          if (!confirm('Give a name to ' + pet + '?')) return;
+          evolve();
         } else {
           if (!confirm('Feed ' + pet + ' a ' + $scope.selectedFood.name + '?')) return;
           if ($scope.selectedFood.target == potion) {

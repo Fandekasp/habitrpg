@@ -10,3 +10,12 @@ db.users.find({'items.pets':{$exists: true}}).forEach(function(user){
         db.users.update({_id: user._id}, { $set: obj });
     });
 })
+
+//Add gears in users
+db.users.update(
+    {},
+    {$set:{
+        'items.gears': {},
+    }},
+    {multi:true}
+)
