@@ -3,11 +3,31 @@
   .modal-header
     h3
       | General statistics
-  .modal-body(bindonce='stats')
-    div()
+  .modal-body(ng-controller='TavernCtrl')
+    div
       table.table.table-striped
-        tr(ng-repeat='stat in stats')
-          td
-            | {{ stat.name }}
-          td
-            | {{ stat.value }}
+        tr
+            td
+                | Registered users
+            td
+                | {{ stats.registered }}
+        tr
+            td
+                | Active Users
+            td
+                | {{ stats.active }}
+        tr
+            td
+                | Number of Parties
+            td
+                | {{ stats.parties }}
+        tr
+            td
+                | Number of Guilds
+            td
+                | {{ stats.guilds }}
+        tr
+            td
+                | Number of Challenges
+            td
+                | {{ stats.challenges }}
