@@ -47,6 +47,11 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
       $scope.selectedFood = $scope.Items.food[food];
     }
 
+    $scope.chooseGear = function(gear){
+      if ($scope.selectedGear && $scope.selectedGear.name == gear) return $scope.selectedGear = null;
+      $scope.selectedGear = $scope.Items.gear[gear];
+    }
+
     $scope.sellInventory = function() {
       // TODO DRY this
       if ($scope.selectedEgg) {
@@ -70,8 +75,14 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
           'stats.gp': User.user.stats.gp + $scope.selectedFood.value
         });
         $scope.selectedFood = null;
+      } else if ($scope.selectedGear) {
+        user.items.gear[$scope.selectedGear.name]--;
+        User.setMultiple({
+          'items.gear': user.items.gear,
+          'stats.gp': User.user.stats.gp + $scope.selectedGear.value
+        });
+        $scope.selectedGear = null;
       }
-
     }
 
     $scope.ownedItems = function(inventory){
@@ -113,10 +124,10 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
       var pet = egg + '-' + potion;
 
       // Feeding Pet
-      if ($scope.selectedFood) {
+      if ($scope.selectedFood || $scope.selectedGear) {
         var setObj = {};
         var userPets = user.items.pets;
-        if (user.items.mounts[pet] && (userPets[pet] >= 50 || $scope.selectedFood.name == 'Saddle'))
+        if (user.items.mounts[pet] && (userPets[pet] >= 50 || $scope.selectedGear.name == 'Saddle'))
           return Notification.text("You already have that mount");
 
         var evolve = function(){
@@ -126,7 +137,7 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
           Notification.text('You have tamed '+egg+", let's go for a ride!");
         }
         // Saddling a pet
-        if ($scope.selectedFood.name == 'Saddle') {
+        if ($scope.selectedGear.name == 'Saddle') {
           if (!confirm('Saddle ' + pet + '?')) return;
           evolve();
         } else {
@@ -142,8 +153,10 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
         }
         setObj['items.pets.' + pet] = userPets[pet];
         setObj['items.food.' + $scope.selectedFood.name] = user.items.food[$scope.selectedFood.name] - 1;
+        setObj['items.gears.' + $scope.selectedGear.name] = user.items.gears[$scope.selectedGear.name] - 1;
         User.setMultiple(setObj);
         $scope.selectedFood = null;
+        $scope.selectedGear = null;
 
       // Selecting Pet
       } else {
