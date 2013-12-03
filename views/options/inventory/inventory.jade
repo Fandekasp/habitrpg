@@ -78,5 +78,13 @@ script(type='text/ng-template', id='partials/options.inventory.inventory.html')
                   |  {{food.value}}
                   span.Pet_Currency_Gem1x.inline-gems
 
+          li.customize-menu
+            menu.pets-menu(label='Gears')
+              div(ng-repeat='gear in Items.gears')
+                button.customize-option(popover='{{gear.notes}}', popover-title='{{gear.text}}', popover-trigger='mouseenter', popover-placement='left', ng-click='buy("gear", gear)', class='Pet_Food_{{gear.name}}')
+                p
+                  |  {{gear.value}}
+                  span.Pet_Currency_Gem1x.inline-gems
+
 
 
