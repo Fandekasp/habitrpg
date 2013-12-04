@@ -96,7 +96,7 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
         return alert("You already have that pet, hatch a different combo.");
 
       var setObj = {};
-      setObj['items.pets.' + pet] = 5;
+      setObj['items.pets.' + pet + '.growth'] = 5;
       setObj['items.eggs.' + egg.name] = user.items.eggs[egg.name] - 1;
       setObj['items.hatchingPotions.' + potion.name] = user.items.hatchingPotions[potion.name] - 1;
 
@@ -128,7 +128,7 @@ habitrpg.controller("InventoryCtrl", ['$rootScope', '$scope', 'User', 'API_URL',
       if ($scope.selectedFood || $scope.selectedGear) {
         var setObj = {};
         var userPets = user.items.pets;
-        if (user.items.mounts[pet] && (userPets[pet] >= 50 || $scope.selectedGear.name == 'Saddle'))
+        if (user.items.mounts[pet] && (userPets[pet].growth >= 50 || $scope.selectedGear.name == 'Saddle'))
           return Notification.text("You already have that mount");
 
         var evolve = function(){

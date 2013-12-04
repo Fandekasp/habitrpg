@@ -126,7 +126,7 @@ var UserSchema = new Schema({
       // Then add additional pets (backer, contributor)
       _.transform(specialPetsMapping, function(m,v,k){ m[k] = Number; })
     ),
-    currentPet: String, // Cactus-Desert
+    currentPet: Object, // {'Cactus-Desert': {'name': '', 'growth': 5}
 
     // eggs: {
     //  'PandaCub': 0, // 0 indicates "doesn't own"
